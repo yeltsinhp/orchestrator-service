@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import { HandleBookingDto } from './dto/handle-booking.dto';
 import { CancelBookingDto } from './dto/cancel-booking.dto';
@@ -63,7 +63,7 @@ export class AppController {
     return await this.orchestratorService.getClient();
   }
 
-  @Post('client')
+  @Post('register')
   async registerClient(@Body() registerClientDto: RegisterClientDto) {
     return await this.orchestratorService.registerClient(registerClientDto);
   }
@@ -71,5 +71,10 @@ export class AppController {
   @Get('flights')
   async getAllFlights() {
     return await this.orchestratorService.getAllFlights();
+  }
+
+  @Get('seats')
+  async getAllSeats(@Query('flightId') flightId: number) {
+    return await this.orchestratorService.getAllSeats(flightId);
   }
 }

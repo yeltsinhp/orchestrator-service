@@ -50,7 +50,9 @@ export class AppService {
 
     // Step 2: Create Flight Reservation
     try {
-      const reservation = await this.flightsClient.send({ cmd: 'createReservation' }, { clientId, flightId, seatNumber }).toPromise();
+      const reservation = await this.flightsClient
+        .send({ cmd: 'createReservation' }, { clientId, flightId, seatNumber })
+        .toPromise();
       return reservation;
     } catch (error) {
       throw new Error('Failed to reserve flight: ' + error.message);
@@ -97,6 +99,12 @@ export class AppService {
   async getAllFlights() {
     return await this.flightsClient
       .send({ cmd: 'getAllFlights' }, {})
+      .toPromise();
+  }
+
+  async getAllSeats(flightId: number) {
+    return await this.flightsClient
+      .send({ cmd: 'getAllSeats' }, flightId)
       .toPromise();
   }
 }
